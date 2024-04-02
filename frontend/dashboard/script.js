@@ -1,5 +1,7 @@
 const url='http://localhost:8080'
 var board_id=''
+const params = new URLSearchParams(window.location.search);
+const userId = params.get('_id');
 
 const addTaskModal = document.getElementById('add-task-modal');
 const addTaskBtn = document.getElementById('add-task-btn');
@@ -28,7 +30,8 @@ addTaskForm.addEventListener('submit', function(event) {
     fetch(`${url}/tasks/${board_id}`,{
         method:'POST',
         headers:{
-            'Content-type':"application/json"
+            'Content-type':"application/json",
+            authorization: `Bearer ${localStorage.getItem('token')}`
         },
         body:JSON.stringify({title,description,status})
     })
@@ -147,10 +150,11 @@ function boardbtn(data) {
 
 
 function fetchBoard(){
-fetch(`${url}/board`,{
+fetch(`${url}/board/user/${userId}`,{
     method:'GET',
     headers:{
-        'Content-type':"application/json"
+        'Content-type':"application/json",
+        authorization: `Bearer ${localStorage.getItem('token')}`
     }
 })
 .then(res=>res.json())

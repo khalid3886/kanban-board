@@ -30,31 +30,32 @@ userRouter.post('/signup',async(req,res)=>{
     } 
 })
 
-userRouter.post('/login',async(req,res)=>{
-    const {email,password}=req.body
-    try{
-        const user=await UserModel.findOne({email})
-        if(user)
-        {
-            bcrypt.compare(password,user.password,async(err,result)=>{
-                if(err)
-                {
-                    res.status(200).json({msg:'wrong credentials'})
-                }else{
-                    const access_token=jwt.sign({userID:user._id},'khalid')
-                    res.status(200).json({msg:'login successfull',access_token})
+userRouter.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+    try {
+        const user = await UserModel.findOne({ email });
+        if (user) {
+            bcrypt.compare(password, user.password, async (err, result) => {
+                if (err) {
+                    console.log(err);
+                    res.status(500).json({ msg: 'Internal server error' });
+                } else {
+                    if (result) {
+                        const access_token = jwt.sign({ userID: user._id }, 'khalid');
+                        res.status(200).json({ msg: 'login successfull', access_token, user });
+                    } else {
+                        res.status(200).json({ msg: 'Wrong credentials' });
+                    }
                 }
-            })
-        }else{
-            res.status(200).json({msg:'sign up please'})
+            });
+        } else {
+            res.status(200).json({ msg: 'Sign up please' });
         }
+    } catch (err) {
+        console.log(err);
+        res.status(400).json({ error: err });
     }
-    catch(err)
-    {
-        console.log(err)
-        res.status(400).json({error:err})
-    }
-})
+});
 
 module.exports={
     userRouter
