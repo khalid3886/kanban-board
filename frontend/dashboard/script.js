@@ -3,6 +3,13 @@ var board_id=''
 const params = new URLSearchParams(window.location.search);
 const userId = params.get('_id');
 
+console.log(userId)
+
+if (userId === null) {
+    alert('Please login first');
+    // Redirect to index.html after user clicks OK
+    window.location.href = '../index.html';
+}
 
 // addtask modal
 

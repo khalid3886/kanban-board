@@ -1,0 +1,28 @@
+*{
+    padding: 0;
+    margin: 0;
+    font-family: 'Teko', sans-serif; 
+    max-width: 100%;
+    max-height: 100%;
+}
+nav{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px;
+}
+
+ul{
+    list-style: none;
+    display: flex;
+    gap: 100px;
+    margin-left: 50px;
+}
+a{
+    text-decoration: none;
+}
+
+h3{
+    text-align: center;
+    margin-top: 38vh;
+}
