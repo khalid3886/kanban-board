@@ -16,7 +16,7 @@ document.getElementById('login-button').addEventListener('click',()=>{
         if(data.msg==='login successfull')
         {
             localStorage.setItem('token',data.access_token)
-            window.location.href=`../dashboard/index.html?_id=${data.user._id}`
+            window.location.href=`./dashboard/index.html?_id=${data.user._id}`
         }else{
             alert('wrong credentials')
         }

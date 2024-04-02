@@ -18,7 +18,7 @@ document.getElementById('signup-button').addEventListener('click',()=>{
     .then(data=>{
         if(data.msg==='user has been registered')
         {
-            window.location.href=`../signin/index.html`
+            window.location.href=`../index.html`
         }
     })
     .catch(err=>console.log(err))
