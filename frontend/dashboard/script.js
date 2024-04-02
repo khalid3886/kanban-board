@@ -3,6 +3,9 @@ var board_id=''
 const params = new URLSearchParams(window.location.search);
 const userId = params.get('_id');
 
+
+// addtask modal
+
 const addTaskModal = document.getElementById('add-task-modal');
 const addTaskBtn = document.getElementById('add-task-btn');
 const closeBtn = addTaskModal.getElementsByClassName('close')[0];
@@ -14,6 +17,7 @@ addTaskBtn.onclick = function() {
 closeBtn.onclick = function() {
     addTaskModal.style.display = 'none';
 }
+
 
 window.onclick = function(event) {
     if (event.target == addTaskModal) {
@@ -43,7 +47,7 @@ addTaskForm.addEventListener('submit', function(event) {
 
 
 
-
+// addboard modal
 
 const modal = document.getElementById('create-board-modal');
 const btn = document.getElementById('create-board-btn');
@@ -69,7 +73,8 @@ form.addEventListener('submit', function(event) {
     fetch(`${url}/board`,{
         method:'POST',
         headers:{
-            'Content-type':"application/json"
+            'Content-type':"application/json",
+            authorization: `Bearer ${localStorage.getItem('token')}`
         },
         body:JSON.stringify({name:boardName})
     })
@@ -78,7 +83,83 @@ form.addEventListener('submit', function(event) {
     .catch(er=>console.log(err))
     modal.style.display = 'none';
 });
+//print subtask
 
+const subtasksModal=document.getElementById('show-subtasks-modal')
+const closesubtasks=document.getElementById("closeSubtasks")
+closesubtasks.addEventListener('click',()=>{
+    subtasksModal.style.display="none"
+})
+
+const printsubtasks=(data)=>{
+    console.log(data)
+    document.getElementById('taskstatus').value = data.status;
+    subtasksModal.style.display="block"
+    document.getElementById('tasks-title').textContent=data.title
+    document.getElementById('tasks-desc').textContent=data.description
+    const subtasksContainer = document.getElementById('subtasks-container');
+    subtasksContainer.innerHTML = '';
+
+    data.subtask.forEach(item=>{
+        //document.getElementById('taskstatus').value=item.status
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.name = item.title;
+        checkbox.checked = item.isCompleted;
+        const label = document.createElement('label');
+        label.textContent = item.title;
+        checkbox.addEventListener('change', function() {
+            const isChecked = this.checked;
+            fetch(`${url}/subtasks/${item._id}`,{
+                method:'PATCH',
+                headers:{
+                    'Content-type':"application/json",
+                    authorization: `Bearer ${localStorage.getItem('token')}`
+                },
+                body:JSON.stringify({isCompleted:isChecked})
+            })
+            .then(res=>res.json())
+            .then(data=>console.log(data))
+            .catch(err=>console.log(err))
+        });
+        const card=document.createElement('div')
+        card.className='subtask-card'
+        card.append(checkbox,label)
+        subtasksContainer.appendChild(card);
+        subtasksContainer.appendChild(document.createElement('br'));
+
+        document.getElementById('submit-subtasks').addEventListener('click',()=>{
+            fetch(`${url}/tasks/${data._id}`,{
+                method:'PATCH',
+                headers:{
+                    'Content-type':"application/json",
+                    authorization: `Bearer ${localStorage.getItem('token')}`
+                },
+                body:JSON.stringify({status:document.getElementById('taskstatus').value})
+            })
+            .then(res=>res.json())
+            .then(data=>console.log(data))
+            .catch(err=>console.log(err))
+        })
+    })
+}
+
+const showsubtasks=(taskid)=>{
+    fetch(`${url}/tasks/${taskid}`,{
+        method:'GET',
+        headers:{
+            'Content-type':"application/json",
+            authorization: `Bearer ${localStorage.getItem('token')}`
+        }
+    })
+    .then(res=>res.json())
+    .then(data=>{
+        printsubtasks(data)
+    })
+    .catch(err=>console.log(err))
+}
+
+//print task
 
 const appendTask=(data)=>{
     document.getElementById('todo-container').innerHTML=""
@@ -88,11 +169,22 @@ const appendTask=(data)=>{
     let doingCount = 0;
     let doneCount = 0;
     data.forEach(item=>{
+        let cnt=0;
+        item.subtask.forEach(i=>{
+            if (i.isCompleted===true)
+            cnt++;
+        })
+        console.log(item);
         const card=document.createElement('div')
         card.className='card'
         const title=document.createElement('p')
         title.textContent=item.description
+        const subtask=document.createElement('p')
+        subtask.textContent=`${cnt} of ${item.subtask.length} subtasks`
+        subtask.style.color='rgb(0,0,0,0.4)'
+        subtask.style.fontSize='13px'
         card.appendChild(title)
+        card.appendChild(subtask)
         console.log(item.status)
         if(item.status==='Todo')
         {
@@ -107,17 +199,24 @@ const appendTask=(data)=>{
             doneCount++;
             document.getElementById('done-container').appendChild(card)
         }
+        card.addEventListener("click", function() {
+            showsubtasks(item._id)
+        });
     })
     document.getElementById('todo-cnt').textContent=`Todo (${todoCount})`
     document.getElementById('doing-cnt').textContent=`Doing (${doingCount})`
     document.getElementById('done-cnt').textContent=`Done (${doneCount})`
+
 }
+
+//display board
 
 const fetchBoardData=(boardId)=>{
     fetch(`${url}/board/${boardId}`,{
         method:'GET',
         headers:{
-            'Content-type':'application/json'
+            'Content-type':'application/json',
+            authorization: `Bearer ${localStorage.getItem('token')}`
         }
     })
     .then(res=>res.json())
@@ -130,14 +229,20 @@ const fetchBoardData=(boardId)=>{
 
 const board_pagination=document.getElementById('board-btn')
 function boardbtn(data) {
+    let previousBtn = null;
     for (let i = 0; i < data.length; i++) {
         (function(index) {
             const btn = document.createElement('button');
             btn.textContent = `Board ${index + 1}`;
             btn.id = `board-${index}`;
             btn.addEventListener('click', () => {
+                if (previousBtn) {
+                    previousBtn.classList.remove('btn-active');
+                }
+                btn.classList.add('btn-active')
                 const boardId = data[index]._id;
                 board_id=boardId
+                previousBtn=btn
                 document.getElementById('boardName').textContent=`Board ${index+1} `
                 fetchBoardData(boardId)
                 console.log(`Clicked on board with ID: ${boardId}`);

@@ -8,13 +8,13 @@
   </head>
   <body>
     <div class="container">
-      <aside>
-        <div class="logo">LOGO</div>
+      <aside style="background-color: white;">
+        <div class="logo">Kanban</div>
         <div class="board-container">
-          <div id="all-boards">All Boards</div>
+          <div id="all-boards" style="color: rgb(0,0,0,0.4);">All Boards</div>
           <div id="board-btn"></div>
           <hr>
-          <button id="create-board-btn">Create new board</button>
+          <button id="create-board-btn">+ Create new board</button>
 
           <div id="create-board-modal" class="modal">
             <div class="modal-content">
@@ -28,15 +28,16 @@
           </div>
         </div>
       </aside>
-      <main>
-        <div class="header">
-          <div id="boardName">Board-</div>
-          <button id="add-task-btn">Add new task</button>
+      <main style="display: flex; flex-direction: column;">
+        <div class="header" style="background-color: white;">
+          <div id="boardName">Board</div>
+          <button id="add-task-btn">+ Add new task</button>
 
           <div id="add-task-modal" class="modal">
             <div class="modal-content">
               <span class="close">&times;</span>
               <form id="add-task-form" style="display: flex; flex-direction: column; padding: 10px;">
+                <h2 style="margin-bottom: 10px;">Add Tasks</h2>
                 <label for="task-title"></label>
                 <input type="text" id="task-title" name="taskTitle" placeholder="title" style="border-radius: 10px; padding: 10px;"/><br />
 
@@ -63,16 +64,35 @@
         </div>
         <div class="task-container">
           <div class="todo">
-            <div id="todo-cnt">todo (2)</div>
+            <div id="todo-cnt" style="color: rgb(0,0,0,0.4);">todo ()</div>
             <div id="todo-container"></div>
           </div>
           <div class="doing">
-            <div id="doing-cnt">doing (3)</div>
+            <div id="doing-cnt" style="color: rgb(0,0,0,0.4);">doing ()</div>
             <div id="doing-container"></div>
           </div>
           <div class="done">
-            <div id="done-cnt">done (4)</div>
+            <div id="done-cnt" style="color: rgb(0,0,0,0.4);">done ()</div>
             <div id="done-container"></div>
+          </div>
+        </div>
+        <div id="show-subtasks-modal" class="modal">
+          <div class="modal-content">
+            <span id="closeSubtasks" class="close">&times;</span>
+            <div id="subtasksData" style="display: flex; flex-direction: column;">
+              <h3 id="tasks-title"></h3>
+              <p id="tasks-desc" style="margin-top: 10px; margin-bottom: 10px; color: rgb(0,0,0,0.7);"></p>
+              <p style="color: rgb(0,0,0,0.4); margin-bottom: 10px;">subtasks</p>
+              <div id="subtasks-container">
+              </div>
+              <select id="taskstatus" name="taskStatus" style="border-radius: 10px; padding: 10px; margin-top: 10px; margin-bottom: 10px;">
+                <option value="" disabled selected>Status</option>
+                <option value="Todo">Todo</option>
+                <option value="Doing">Doing</option>
+                <option value="Done">Done</option></select
+              ><br />
+              <button id="submit-subtasks">submit</button>
+            </div>
           </div>
         </div>
       </main>

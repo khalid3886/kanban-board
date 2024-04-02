@@ -3,7 +3,7 @@
     margin: 0;
     max-width: 100%;
     max-height: 100%;
-    /* //background-color: purple; */
+    font-family: 'Teko', sans-serif; 
 }
 
 .container{
@@ -28,6 +28,7 @@ main{
 .logo {
     padding: 20px;
     font-size: 35px;
+    margin-bottom: 10px;
 }
 .board-container{
     display: flex;
@@ -40,11 +41,12 @@ main{
     gap: 10px;
     padding: 20px;
 }
-#board-btn>button,#create-board-btn,#modal-create-board,#add-task-btn,#modal-create-task{
+#board-btn>button,#create-board-btn,#modal-create-board,#add-task-btn,#modal-create-task,#submit-subtasks{
     width: 220px;
     border-radius: 10px;
     border-style: none;
     padding: 10px;
+    color: rgb(0,0,0,0.4);
 }
 #create-board-btn{
     margin-left: 20px;
@@ -66,6 +68,8 @@ margin-top: 10px;
 }
 .task-container{
     display: flex;
+    background: #F4F7FD;
+    flex-grow: 1;
 }
 
 .task-container > div {
@@ -85,8 +89,12 @@ flex-grow: 1;
 margin-top: 10px;
 height:50px;
 padding:15px;
-box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 margin-left: 10px;
+border-radius: 10px;
+display: flex;
+flex-direction: column;
+gap: 5px;
 }
 
 .modal {
@@ -123,4 +131,28 @@ margin-left: 10px;
     color: black;
     text-decoration: none;
     cursor: pointer;
+}
+
+.btn-active {
+    background-color: #635FC7;
+    color: white !important;
+}
+#add-task-btn,#submit-subtasks{
+    color: white !important;
+    background-color: #635FC7;
+    border-radius: 20px;
+}
+#board-btn>button:hover,#create-board-btn:hover,#modal-create-board:hover,#add-task-btn:hover,#modal-create-task:hover,#submit-subtasks:hover{
+    transform: scale(1.05);
+    cursor: pointer;
+}
+.card:hover{
+    cursor: pointer;
+}
+.subtask-card{
+    background-color: #F4F7FD;
+    padding: 7px;
+    display: flex;
+    gap: 10px;
+    border-radius: 8px;
 }

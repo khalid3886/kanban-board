@@ -25,6 +25,19 @@ taskRouter.get('/:taskID',auth,async(req,res)=>{
     }
 })
 
+taskRouter.patch('/:taskID',async(req,res)=>{
+    const _id=req.params.taskID
+    const {status}=req.body
+    try{
+        await TaskModel.findByIdAndUpdate(_id,{status})
+        res.status(200).json({msg:'task updated'})
+    }
+    catch(err)
+    {
+        res.status(400).json({error:err})
+    }
+})
+
 taskRouter.post('/:boardId',auth,async(req,res)=>{
     const {boardId}=req.params
     const {title,status,description}=req.body

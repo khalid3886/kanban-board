@@ -25,6 +25,19 @@ subtaskRouter.get('/:subtaskID',async(req,res)=>{
     }
 })
 
+subtaskRouter.patch('/:subtaskID',async(req,res)=>{
+    const _id=req.params.subtaskID
+    const {isCompleted}=req.body
+    try{
+        await SubtaskModel.findByIdAndUpdate(_id,{isCompleted})
+        res.status(200).json({msg:'subtask updated'})
+    }
+    catch(err)
+    {
+        res.status(400).json({error:err})
+    }
+})
+
 subtaskRouter.post('/:taskId',async(req,res)=>{
     const {taskId}=req.params
     const {title,isCompleted}=req.body
