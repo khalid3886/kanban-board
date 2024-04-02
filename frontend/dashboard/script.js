@@ -1,4 +1,4 @@
-const url='http://localhost:8080'
+const url='https://kanban-board-lime-theta.vercel.app'
 var board_id=''
 const params = new URLSearchParams(window.location.search);
 const userId = params.get('_id');
@@ -148,6 +148,25 @@ const printsubtasks=(data)=>{
             .then(data=>console.log(data))
             .catch(err=>console.log(err))
         })
+    })
+    document.getElementById('create-subtask').addEventListener('click',()=>{
+        const subtask_title=document.getElementById('subtasks-input').value
+        if(subtask_title)
+        {
+            fetch(`${url}/subtasks/${data._id}`,{
+                method:"POST",
+                headers:{
+                    'Content-type':"application/json",
+                    authorization: `Bearer ${localStorage.getItem('token')}`
+                },
+                body:JSON.stringify({title:subtask_title})
+            })
+            .then(res=>res.json())
+            .then(data=>console.log(data))
+            .catch(err=>console.log(err))
+        }else{
+            alert('subtask is empty')
+        }
     })
 }
 

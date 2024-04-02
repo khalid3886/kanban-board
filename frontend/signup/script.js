@@ -1,9 +1,9 @@
-let url='http://localhost:8080'
+let url='https://kanban-board-lime-theta.vercel.app'
 document.getElementById('signup-button').addEventListener('click',()=>{
     const name=document.getElementById('signup-name').value
     const email=document.getElementById('signup-email').value
     const password=document.getElementById('signup-pass').value
-    fetch(`http://localhost:8080/users/signup`,{
+    fetch(`${url}/users/signup`,{
         method:"POST",
         headers:{
             'content-type':'application/json'

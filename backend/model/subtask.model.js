@@ -1,7 +1,7 @@
 const mongoose=require('mongoose')
 const subtaskSchema=mongoose.Schema({
     title : String,
-	isCompleted : Boolean
+	isCompleted : {type:Boolean, default:false}
 },
 {
     versionKey:false

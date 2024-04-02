@@ -41,7 +41,7 @@ main{
     gap: 10px;
     padding: 20px;
 }
-#board-btn>button,#create-board-btn,#modal-create-board,#add-task-btn,#modal-create-task,#submit-subtasks{
+#board-btn>button,#create-board-btn,#modal-create-board,#add-task-btn,#modal-create-task,#submit-subtasks,#create-subtask{
     width: 220px;
     border-radius: 10px;
     border-style: none;
@@ -142,7 +142,7 @@ gap: 5px;
     background-color: #635FC7;
     border-radius: 20px;
 }
-#board-btn>button:hover,#create-board-btn:hover,#modal-create-board:hover,#add-task-btn:hover,#modal-create-task:hover,#submit-subtasks:hover{
+#board-btn>button:hover,#create-board-btn:hover,#modal-create-board:hover,#add-task-btn:hover,#modal-create-task:hover,#submit-subtasks:hover,#create-subtask:hover{
     transform: scale(1.05);
     cursor: pointer;
 }

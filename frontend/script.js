@@ -1,4 +1,4 @@
-let url='http://localhost:8080'
+let url='https://kanban-board-lime-theta.vercel.app'
 
 document.getElementById('login-button').addEventListener('click',()=>{
     const email=document.getElementById('login-email').value
