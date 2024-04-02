@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <aside>
+        <div class="logo">LOGO</div>
+        <div class="board-container">
+          <div id="all-boards">All Boards</div>
+          <div id="board-btn"></div>
+          <hr>
+          <button id="create-board-btn">Create new board</button>
+
+          <div id="create-board-modal" class="modal">
+            <div class="modal-content">
+              <span class="close">&times;</span>
+              <form id="create-board-form" style="display: flex; flex-direction: column; padding: 10px;">
+                <label for="board-name"></label>
+                <input type="text" id="board-name" name="boardName" style="border-radius: 10px; padding: 10px;" placeholder="board name"/>
+                <button type="submit" id="modal-create-board">Create</button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </aside>
+      <main>
+        <div class="header">
+          <div id="boardName">Board-</div>
+          <button id="add-task-btn">Add new task</button>
+
+          <div id="add-task-modal" class="modal">
+            <div class="modal-content">
+              <span class="close">&times;</span>
+              <form id="add-task-form" style="display: flex; flex-direction: column; padding: 10px;">
+                <label for="task-title"></label>
+                <input type="text" id="task-title" name="taskTitle" placeholder="title" style="border-radius: 10px; padding: 10px;"/><br />
+
+                <label for="task-description"></label>
+                <input
+                  type="text"
+                  id="task-description"
+                  name="taskDescription"
+                  placeholder="description"
+                  style="border-radius: 10px; padding: 10px; margin-top: 10px; margin-bottom: 10px;"
+                /><br />
+
+                <label for="task-status"></label>
+                <select id="task-status" name="taskStatus" style="border-radius: 10px; padding: 10px;">
+                  <option value="Todo">Todo</option>
+                  <option value="Doing">Doing</option>
+                  <option value="Done">Done</option></select
+                ><br />
+
+                <button type="submit" id="modal-create-task" style="margin-top: 10px;">Submit</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="task-container">
+          <div class="todo">
+            <div id="todo-cnt">todo (2)</div>
+            <div id="todo-container"></div>
+          </div>
+          <div class="doing">
+            <div id="doing-cnt">doing (3)</div>
+            <div id="doing-container"></div>
+          </div>
+          <div class="done">
+            <div id="done-cnt">done (4)</div>
+            <div id="done-container"></div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+  <script src="script.js"></script>
+</html>
